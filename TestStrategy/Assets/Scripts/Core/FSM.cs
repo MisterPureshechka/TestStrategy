@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Core
 {
@@ -32,7 +30,7 @@ namespace Core
             public override void OnUpdate() { }
         }
 
-        private Dictionary<Type, State> _states = new Dictionary<Type, State>()
+        private readonly Dictionary<Type, State> _states = new()
         {
             { typeof(Default), new Default() },
             { typeof(Agressive), new Agressive() },
@@ -43,14 +41,10 @@ namespace Core
         public void ChangeState(Type stateType)
         {
             _currentState?.OnExit();
-            _currentState = _states[stateType];
-            _currentState.OnEnter();
+            _currentState = _states.TryGetValue(stateType, out var result) ? result : null;
+            _currentState?.OnEnter();
         }
 
-        public void UpdateState()
-        {
-            _currentState?.OnUpdate();
-        }
+        public void UpdateState() => _currentState?.OnUpdate();
     }
 }
-
