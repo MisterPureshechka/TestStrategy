@@ -14,8 +14,11 @@ namespace Core
             navAgent.isStopped = true;
 
             await Task.Delay(UPDATE_MS);
-            navAgent.destination = targetPos.MoveToNavArea();
-            navAgent.isStopped = false;
+            if (Application.isPlaying && navAgent.isActiveAndEnabled)
+            {
+                navAgent.destination = targetPos.MoveToNavArea();
+                navAgent.isStopped = false;
+            }
             while (Application.isPlaying && (!navAgent.isActiveAndEnabled || !navAgent.isStopped))
             {
                 navAgent.isStopped = Vector3.Distance(navAgent.transform.position, navAgent.destination) < doneRadius;
