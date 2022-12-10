@@ -14,7 +14,7 @@ namespace Core
 
         public static Vector3 ToNavArea(this Vector3 value)
         {
-            if (!NavMesh.SamplePosition(value, out var hit, float.MaxValue, -1))
+            if (!NavMesh.SamplePosition(value, out var hit, float.MaxValue, Physics.AllLayers))
                 throw new PathFinderException("Can`t find navigation mesh area");
             return hit.position;
         }
