@@ -22,7 +22,7 @@ namespace Core
 
             if (_selectedUnit != null)
             {
-                _selectedUnit.ChangePath(hit.point);
+                // TODO: use FSM.State.DefaultPlayer for moving...
                 _selectedUnit.OnDeselected();
                 _selectedUnit = null;
             }
